@@ -1,11 +1,13 @@
 import { Avatar } from '@material-ui/core'
 import { ThumbUp, ChatBubbleOutline, NearMe, AccountCircle, ExpandMore } from '@material-ui/icons'
+import { useState } from 'react'
 import { useStateValue } from '../../Context/userProvider'
 import './feed.css'
 
 const Post = ({ proPic, image, username, timestamp, post }) => {
 
-  const [{ user }, dispatch] = useStateValue()
+    const [{ user }, dispatch] = useStateValue()
+    const [like, setLike] = useState(0)
 
     return (
         <div className="post">
@@ -21,12 +23,14 @@ const Post = ({ proPic, image, username, timestamp, post }) => {
                 <p>{post}</p>
             </div>
             <div className="postImage">
-                <img src={image} alt="" />
+                {image && <img src={image} alt="" />}
             </div>
             <div className="postButtons">
                 <div className="postButton">
-                    <ThumbUp />
-                    <p>Like</p>
+                    <button className="like" onClick={() => setLike(like + 1)}>
+                        <ThumbUp />
+                        <p>Like <span style={{paddingLeft: '5px'}}>{like}</span></p>
+                    </button>
                 </div>
                 <div className="postButton">
                     <ChatBubbleOutline />
