@@ -1,28 +1,40 @@
 import { Avatar } from '@material-ui/core'
 import { Videocam, PhotoLibrary, InsertEmoticon } from '@material-ui/icons'
 import { useState } from 'react'
+import { useStateValue } from '../../Context/userProvider'
+import db from '../../firebase.config'
+import firebase from 'firebase'
 import './feed.css'
 
 const CreatePost = () => {
 
+    const [{ user }, dispatch] = useStateValue()
     const [input, setInput] = useState('')
     const [image, setImage] = useState('')
     const handleSubmit = e => {
         e.preventDefault()
-
+        if (input === '' && image === '') return
+        db.collection('posts')
+            .add({
+                post: input,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                profilePic: user.photoURL,
+                username: user.displayName,
+                image
+            })
         setInput('')
         setImage('')
     }
     return (
         <div className="createPost">
             <div className="createPostTop">
-                <Avatar />
+                <Avatar src={user.photoURL} />
                 <form>
                     <input
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         type="text"
-                        placeholder="What's on your mind?"
+                        placeholder={`What's on your mind, ${user.displayName}?`}
                         className="createPostInput"
                     />
                     <input

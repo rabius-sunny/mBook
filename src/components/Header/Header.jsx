@@ -4,14 +4,19 @@ import FlagIcon from '@material-ui/icons/Flag';
 import AddIcon from '@material-ui/icons/Add';
 import ForumIcon from '@material-ui/icons/Forum';
 import { SubscriptionsOutlined, StorefrontOutlined, SupervisedUserCircle, NotificationsActive, ExpandMore } from '@material-ui/icons';
-import './header.css'
 import { Avatar, IconButton } from '@material-ui/core';
+import './header.css'
+import logo from '../../images/logo.png'
+import { useStateValue } from '../../Context/userProvider';
 
 const Header = () => {
+
+  const [{ user }, dispatch] = useStateValue()
+
     return (
         <div className="header">
             <div className="headerLeft">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Facebook_f_Logo_%28with_gradient%29.svg" alt="fb" />
+                <img src={logo} alt="fb" />
                 <div className="headerInput">
                     <SearchIcon />
                     <input type="text" placeholder="Search Facebook" />
@@ -36,8 +41,8 @@ const Header = () => {
             </div>
             <div className="headerRight">
                 <div className="headerInfo">
-                    <Avatar />
-                    <h4>Rabius Sunny</h4>
+                    <Avatar src={user.photoURL} />
+                    <h4>{user.displayName}</h4>
                 </div>
                 <IconButton>
                     <AddIcon />

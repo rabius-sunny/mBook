@@ -5,33 +5,37 @@ import Stories from './Stories'
 import pic from '../../images/pro.jpg'
 import ocean from '../../images/ocean.jpg'
 import ocean3 from '../../images/ocean3.jpg'
+import db from '../../firebase.config'
+import { useEffect, useState } from 'react'
 
 const Feed = () => {
+
+    const [posts, setPosts] = useState([])
+    useEffect(() => {
+        db.collection('posts')
+            .orderBy('timestamp', 'desc')
+            .onSnapshot(snapshot => {
+                setPosts(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+            })
+    }, [])
+
     return (
         <div className="feed">
             <Stories />
             <CreatePost />
-            <Post
-                proPic={pic}
-                username="Rabius Sunny"
-                post="This is a post"
-                timestamp={new Date()}
-            />
-            <Post
-                proPic={pic}
-                username="Rabius Sunny"
-                post="This is a post"
-                image={ocean}
-                timestamp={new Date()}
-            />
-            
-            <Post
-                proPic={pic}
-                username="Rabius Sunny"
-                post="This is a post"
-                image={ocean3}
-                timestamp={new Date()}
-            />
+            {
+                posts.map(singlePost => {
+                    const { id, profilePic, username, post, image, timestamp } = singlePost.data
+                    return <Post
+                        key={id}
+                        proPic={profilePic}
+                        username={username}
+                        post={post}
+                        image={image}
+                        timestamp={timestamp}
+                    />
+                })
+            }
         </div>
     )
 }

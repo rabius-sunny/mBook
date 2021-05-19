@@ -1,16 +1,20 @@
 import { Avatar } from '@material-ui/core'
 import { ThumbUp, ChatBubbleOutline, NearMe, AccountCircle, ExpandMore } from '@material-ui/icons'
+import { useStateValue } from '../../Context/userProvider'
 import './feed.css'
 
 const Post = ({ proPic, image, username, timestamp, post }) => {
+
+  const [{ user }, dispatch] = useStateValue()
+
     return (
         <div className="post">
             <div className="postTop">
-                <Avatar src={proPic}
+                <Avatar src={user.photoURL}
                     className="postAvatar" />
                 <div className="postInfo">
                     <h3>{username}</h3>
-                    <p>{new Date(timestamp).toUTCString()}</p>
+                    <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
                 </div>
             </div>
             <div className="postBottom">
