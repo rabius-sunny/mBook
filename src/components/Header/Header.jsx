@@ -2,62 +2,68 @@ import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
 import FlagIcon from '@material-ui/icons/Flag';
 import AddIcon from '@material-ui/icons/Add';
-import ForumIcon from '@material-ui/icons/Forum';
-import { SubscriptionsOutlined, StorefrontOutlined, SupervisedUserCircle, NotificationsActive, ExpandMore } from '@material-ui/icons';
-import { Avatar, IconButton } from '@material-ui/core';
-import './header.css'
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ChatIcon from '@material-ui/icons/Chat';
+import { SubscriptionsOutlined, StorefrontOutlined, SupervisedUserCircle, NotificationsActive } from '@material-ui/icons';
+import { Avatar, Badge, IconButton } from '@material-ui/core';
+import classes from './header.module.css'
 import logo from '../../images/logo.png'
 import { useStateValue } from '../../Context/userProvider';
 
 const Header = () => {
 
-  const [{ user }, dispatch] = useStateValue()
+    const [{ user }, dispatch] = useStateValue()
 
     return (
-        <div className="header">
-            <div className="headerLeft">
+        <div className={classes.header}>
+            <div className={classes.headerLeft}>
                 <img src={logo} alt="fb" />
-                <div className="headerInput">
+                <div className={classes.headerInput}>
                     <SearchIcon />
                     <input type="text" placeholder="Search Facebook" />
                 </div>
             </div>
-            <div className="headerCenter">
-                <div className="headerOption headerOption--active">
-                    <HomeIcon fontSize="large" />
+            <div className={classes.headerCenter}>
+                <div className={classes.headerOption} style={{ borderBottom: '4px solid #2e81f4' }} >
+                    <HomeIcon fontSize="large" className="active" />
                 </div>
-                <div className="headerOption">
+                <div className={classes.headerOption}>
                     <FlagIcon fontSize="large" />
                 </div>
-                <div className="headerOption">
-                    <SubscriptionsOutlined fontSize="large" />
+                <div className={classes.headerOption}>
+                    <Badge badgeContent={4} color="secondary">
+                        <SubscriptionsOutlined fontSize="large" />
+                    </Badge>
                 </div>
-                <div className="headerOption">
+                <div className={classes.headerOption}>
                     <StorefrontOutlined fontSize="large" />
                 </div>
-                <div className="headerOption">
-                    <SupervisedUserCircle fontSize="large" />
+                <div className={classes.headerOption}>
+                    <Badge badgeContent={'9+'} color="secondary">
+                        <SupervisedUserCircle fontSize="large" />
+                    </Badge>
                 </div>
             </div>
-            <div className="headerRight">
-                <div className="headerInfo">
+            <div className={classes.headerRight}>
+                <div className={classes.headerInfo}>
                     <Avatar src={user.photoURL} />
                     <h4>{user.displayName}</h4>
                 </div>
-                <IconButton>
+                <i>
                     <AddIcon />
-                </IconButton>
-                <IconButton>
-                    <ForumIcon />
-                </IconButton>
-                <IconButton>
-                    <NotificationsActive />
-                </IconButton>
-                <IconButton>
-                    <ExpandMore />
-                </IconButton>
-            </div>
-        </div>
+                </i>
+                <i>
+                    <ChatIcon />
+                </i>
+                <i>
+                    <NotificationsIcon />
+                </i>
+                <i>
+                    <ArrowDropDownIcon />
+                </i>
+            </div >
+        </div >
     )
 }
 export default Header
