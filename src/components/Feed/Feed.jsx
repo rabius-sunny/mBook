@@ -2,16 +2,19 @@ import CreatePost from './CreatePost'
 import './feed.css'
 import Post from './Post'
 import Stories from './Stories'
+import db from '../../firebase.config'
 import { useEffect, useState } from 'react'
 
 const Feed = () => {
 
     const [posts, setPosts] = useState([])
+
     useEffect(() => {
-        fetch('https://mbook-backend.herokuapp.com/posts')
-            .then(res => res.json())
-            .then(data => setPosts(data))
-            .catch(err => console.log(err.message))
+        db.collection('posts')
+            .orderBy('timpstamp', 'desc')
+            .onSnapshot(snapshot => {
+                setPosts(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+            })
     }, [])
     console.log(posts)
 
@@ -21,14 +24,14 @@ const Feed = () => {
             <CreatePost />
             {
                 posts.map(singlePost => {
-                    const { _id, profilePic, author, post, image, date } = singlePost
+                    const { id, profilePic, username, post, image, timpstamp } = singlePost.data
                     return <Post
-                        key={_id}
+                        key={id}
                         profilePic={profilePic}
-                        author={author}
+                        username={username}
                         post={post}
                         image={image}
-                        date={date}
+                        timpstamp={timpstamp}
                     />
                 })
             }

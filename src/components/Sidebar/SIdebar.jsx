@@ -7,10 +7,12 @@ import { useStateValue } from '../../Context/userProvider'
 const SIdebar = () => {
 
     const [{ user }, dispatch] = useStateValue()
+    let photo = sessionStorage.getItem('profilePic')
+    let name = sessionStorage.getItem('username')
 
     return (
         <div className="sidebar">
-            <SidebarRow src={user.photoURL} title={user.displayName} />
+            <SidebarRow src={photo || user.photoURL } title={name || user.displayName} />
             <SidebarRow Icon={LocalHospital} title="COVID-19 Information Center" />
             <SidebarRow Icon={EmojiFlags} title="Pages" />
             <SidebarRow Icon={People} title="Friends" />

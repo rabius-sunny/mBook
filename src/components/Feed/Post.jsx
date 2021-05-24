@@ -1,10 +1,11 @@
-import { Avatar } from '@material-ui/core'
+import { Avatar, Typography } from '@material-ui/core'
 import { ThumbUp, ChatBubbleOutline, NearMe, AccountCircle, ExpandMore } from '@material-ui/icons'
 import { useState } from 'react'
 import './feed.css'
 
-const Post = ({ profilePic, author, post, image, date }) => {
+const Post = ({ profilePic, username, post, image, timpstamp }) => {
     const [like, setLike] = useState(0)
+    console.log(profilePic,username, post, image, timpstamp)
 
     return (
         <div className="post">
@@ -12,12 +13,12 @@ const Post = ({ profilePic, author, post, image, date }) => {
                 <Avatar src={profilePic}
                     className="postAvatar" />
                 <div className="postInfo">
-                    <h3>{author}</h3>
-                    <p>{date.toLocaleString()}</p>
+                    <h3>{username}</h3>
+                    <p>{new Date(timpstamp?.toDate()).toLocaleString()}</p>
                 </div>
             </div>
             <div className="postBottom">
-                <p>{post}</p>
+                <div><Typography style={{ whiteSpace: "pre-line" }} variant="body2" component="p" > {post} </Typography></div>
             </div>
             <div className="postImage">
                 {image && <img src={image} alt="postImg" />}

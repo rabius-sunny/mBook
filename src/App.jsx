@@ -13,15 +13,15 @@ const App = () => {
   return (
     <div className="app">
       {
-        !user ? <Login /> :
-          <>
-            <Header />
-            <div className="appBody">
-              <SIdebar />
-              <Feed />
-              <ContactBar />
-            </div>
-          </>
+        user || sessionStorage.getItem('username') ? <>
+          <Header />
+          <div className="appBody">
+            <SIdebar />
+            <Feed />
+            <ContactBar />
+          </div>
+        </> :
+          <Login />
       }
     </div>
 

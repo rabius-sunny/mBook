@@ -15,6 +15,8 @@ const Login = () => {
                     type: actionTypes.SET_USER,
                     user: res.user
                 })
+                sessionStorage.setItem('username', res.user.displayName)
+                sessionStorage.setItem('profilePic', res.user.photoURL)
             })
             .catch(err => console.log(err.message))
     }

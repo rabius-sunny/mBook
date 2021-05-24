@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ChatIcon from '@material-ui/icons/Chat';
-import { SubscriptionsOutlined, StorefrontOutlined, SupervisedUserCircle, NotificationsActive } from '@material-ui/icons';
+import { SubscriptionsOutlined, StorefrontOutlined, SupervisedUserCircle } from '@material-ui/icons';
 import { Avatar, Badge, IconButton } from '@material-ui/core';
 import classes from './header.module.css'
 import logo from '../../images/logo.png'
@@ -14,6 +14,8 @@ import { useStateValue } from '../../Context/userProvider';
 const Header = () => {
 
     const [{ user }, dispatch] = useStateValue()
+    let photo = sessionStorage.getItem('profilePic')
+    let author = sessionStorage.getItem('username')
 
     return (
         <div className={classes.header}>
@@ -47,8 +49,8 @@ const Header = () => {
             </div>
             <div className={classes.headerRight}>
                 <div className={classes.headerInfo}>
-                    <Avatar src={user.photoURL} />
-                    <h4>{user.displayName}</h4>
+                    <Avatar src={photo || user.photoURL} />
+                    <h4>{author || user.displayName}</h4>
                 </div>
                 <i>
                     <AddIcon />
