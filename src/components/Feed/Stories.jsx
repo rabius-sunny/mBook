@@ -12,7 +12,7 @@ const Stories = () => {
             <Story image={ocean} title="Rabius Sunny" src={pro} />
             <Story image={ocean3} title="Rabius Sunny" src={pro} />
             <Story image={ocean2} title="Rabius Sunny" src={pro} />
-            <Story image={ocean4} title="Rabius Sunny" src={pro} />
+            <Story image={ocean} title="Rabius Sunny" src={pro} />
         </div>
     )
 }

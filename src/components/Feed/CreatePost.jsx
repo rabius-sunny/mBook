@@ -2,8 +2,6 @@ import { Avatar } from '@material-ui/core'
 import { Videocam, PhotoLibrary, InsertEmoticon } from '@material-ui/icons'
 import { useState } from 'react'
 import { useStateValue } from '../../Context/userProvider'
-import db from '../../firebase.config'
-import firebase from 'firebase'
 import './feed.css'
 
 const CreatePost = () => {
@@ -13,24 +11,33 @@ const CreatePost = () => {
     const [image, setImage] = useState('')
     const handleSubmit = e => {
         e.preventDefault()
-        if (input === '' && image === '') return
-        db.collection('posts')
-            .add({
+        if (input !== '' || image !== '') {
+            const post = {
                 post: input,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                image: image,
+                author: user.displayName,
                 profilePic: user.photoURL,
-                username: user.displayName,
-                image
+                date: new Date()
+            }
+            fetch('https://mbook-backend.herokuapp.com/create', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(post)
             })
-        setInput('')
-        setImage('')
+
+            setImage('')
+            setInput('')
+        } else alert('Please write some text or add an image')
+
     }
     return (
         <div className="createPost">
             <div className="createPostTop">
                 <Avatar src={user.photoURL} />
                 <form>
-                    <input
+                    <textarea
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         type="text"
